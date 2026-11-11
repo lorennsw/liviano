@@ -1,0 +1,13 @@
+/* Eco y Extremo: corta animaciones y transiciones (menos CPU/GPU).
+   Se usa una duración mínima en vez de "none" para que los eventos
+   animationend/transitionend sigan disparándose y los sitios no se traben. */
+*,
+*::before,
+*::after {
+  animation-duration: 0.01ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
+}

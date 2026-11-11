@@ -1,0 +1,4 @@
+# Los .cmd necesitan saltos de linea de Windows tal cual estan guardados.
+*.cmd -text
+*.ico binary
+*.png binary

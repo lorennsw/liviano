@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Liviano</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body data-mode="pro">
+    <header>
+      <img src="icons/icon48.png" width="22" height="22" alt="" />
+      <h1>Liviano</h1>
+      <span id="badge" class="badge">Pro</span>
+    </header>
+
+    <div class="modes" role="radiogroup" aria-label="Modo">
+      <button type="button" role="radio" data-mode="eco">
+        <strong>Eco</strong>
+        <span>Ahorra batería y RAM</span>
+      </button>
+      <button type="button" role="radio" data-mode="pro">
+        <strong>Pro</strong>
+        <span>Rápido, sin romper nada</span>
+      </button>
+      <button type="button" role="radio" data-mode="extremo">
+        <strong>Extremo</strong>
+        <span>Lo mínimo indispensable</span>
+      </button>
+    </div>
+
+    <ul id="points" class="points"></ul>
+
+    <div class="stats">
+      <div>
+        <b id="blocked">0</b>
+        <span>bloqueos en esta página</span>
+      </div>
+      <div>
+        <b id="asleep">0</b>
+        <span>pestañas suspendidas</span>
+      </div>
+    </div>
+
+    <button type="button" id="sleep" class="action">Suspender las demás pestañas</button>
+
+    <label class="row">
+      <input type="checkbox" id="noImages" />
+      <span>Solo texto (sin imágenes)</span>
+    </label>
+    <label class="row" id="pauseRow" hidden>
+      <input type="checkbox" id="pause" />
+      <span>Pausar en <b id="host"></b></span>
+    </label>
+
+    <p id="hint" class="hint" hidden>
+      Listo. Algunos cambios se ven al recargar.
+      <button type="button" id="reload" class="link">Recargar pestaña</button>
+    </p>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
