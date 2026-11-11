@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Liviano",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Navegador más liviano: bloquea anuncios y rastreadores, suspende pestañas inactivas y ofrece tres modos: Eco, Pro y Extremo.",
   "minimum_chrome_version": "121",
   "icons": {

@@ -32,7 +32,7 @@ El modo se elige en la página de nueva pestaña. La primera vez Liviano elige u
 |---|---|---|
 | **Eco** | Bloquea anuncios y rastreadores. Suspende pestañas sin usar a los 10 min. Sin animaciones, sin video o audio que arranca solo, sin precarga. | Un proceso por sitio, sin desplazamiento suave, sin transmisión a otros dispositivos. |
 | **Pro** | Bloquea anuncios y rastreadores. Suspende a los 30 min. Precarga enlaces del mismo sitio al pasar el mouse. | Sin recortes visibles; descargas en paralelo. |
-| **Extremo** | Todo lo de Eco. Suspende a los 3 min. Bloquea fuentes web, video/audio directo y marcos de terceros. Sin traductor. | Todo lo de Eco, más el modo "equipo de gama baja", un tope de 4 procesos de páginas y sin caché de páginas anteriores. |
+| **Extremo** | Todo lo de Eco. Suspende a los 3 min. Bloquea fuentes web, video/audio directo y marcos de terceros. Sin traductor. | Todo lo de Eco, más un tope de 4 procesos de páginas y sin caché de páginas anteriores. |
 
 Los cambios en las páginas rigen al instante. Los del motor se completan al cerrar y volver a abrir Liviano.
 

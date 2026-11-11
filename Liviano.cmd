@@ -92,12 +92,14 @@ set "EXTRA=--enable-features=ParallelDownloading"
 goto :lanzar
 
 :extremo
-rem Todo lo de Eco, mas el modo "equipo de gama baja" del motor, un tope de
-rem procesos y sin traductor ni transmision a otros dispositivos.
+rem Todo lo de Eco, mas un tope de procesos y sin traductor ni transmision a
+rem otros dispositivos.
+rem (No se usa --enable-low-end-device-mode: en PC deja zonas sin pintar y
+rem  colores corridos, porque dibuja con texturas de baja calidad.)
 rem  BackForwardCache      no guarda en RAM las paginas de las que saliste
 rem  GlobalMediaControls   quita el boton de control de medios de la barra
 set "FUERA=%FUERA%,MediaRouter,SpareRendererForSitePerProcess,Translate,BackForwardCache,GlobalMediaControls"
-set "EXTRA=--process-per-site --renderer-process-limit=4 --disable-smooth-scrolling --force-prefers-reduced-motion --enable-low-end-device-mode"
+set "EXTRA=--process-per-site --renderer-process-limit=4 --disable-smooth-scrolling --force-prefers-reduced-motion"
 rem Si la placa de video es muy vieja y la pantalla parpadea, quita el "rem":
 rem set "EXTRA=%EXTRA% --disable-gpu"
 goto :lanzar

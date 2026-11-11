@@ -1,32 +1,36 @@
 :root {
-  --bg: #f4f5f7;
+  --bg: #f5f6f8;
   --surface: #ffffff;
+  --surface-2: #eef0f3;
   --text: #14171c;
   --muted: #5d6673;
-  --line: #dde1e6;
+  --line: #dfe3e8;
   --accent: #2f6fed;
   --on-accent: #ffffff;
+  --shadow: 0 1px 2px rgb(20 23 28 / 0.06), 0 10px 28px rgb(20 23 28 / 0.08);
   color-scheme: light dark;
 }
 body[data-mode='eco'] {
-  --accent: #218a4c;
+  --accent: #1f8a4b;
 }
 body[data-mode='extremo'] {
-  --accent: #d93a3f;
+  --accent: #d6363b;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #16181c;
-    --surface: #22252b;
-    --text: #eef0f3;
-    --muted: #9aa3af;
-    --line: #30343c;
+    --bg: #0e1013;
+    --surface: #181b20;
+    --surface-2: #22262d;
+    --text: #f1f3f5;
+    --muted: #8d96a3;
+    --line: #272b33;
     --accent: #5b8ff5;
     --on-accent: #0a1020;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.35);
   }
   body[data-mode='eco'] {
     --accent: #3ebd72;
-    --on-accent: #08130c;
+    --on-accent: #06140c;
   }
   body[data-mode='extremo'] {
     --accent: #f0646a;
@@ -45,31 +49,71 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  background: var(--bg);
+  /* Un resplandor fijo con el color del modo; sin animaciones. */
+  background:
+    radial-gradient(900px 420px at 50% -120px, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    var(--bg);
+  background-attachment: fixed;
   color: var(--text);
-  font: 14px/1.4 system-ui, 'Segoe UI', sans-serif;
+  font: 14px/1.45 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
 }
 
 main {
   flex: 1;
-  width: min(560px, 100% - 32px);
+  width: min(620px, 100% - 32px);
   margin: 0 auto;
-  padding-top: 24vh;
+  padding-top: clamp(40px, 15vh, 150px);
 }
 
+/* --- Marca ---------------------------------------------------------------- */
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+.logo {
+  flex: none;
+}
+.logo-bg {
+  fill: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  stroke: color-mix(in srgb, var(--accent) 40%, transparent);
+  stroke-width: 3;
+}
+.logo-bolt {
+  fill: var(--accent);
+}
+.brand h1 {
+  margin: 0;
+  font: 700 34px/1.05 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  letter-spacing: -0.025em;
+}
+.brand p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* --- Buscador ------------------------------------------------------------- */
 #search {
   display: flex;
   align-items: center;
-  gap: 10px;
-  height: 48px;
-  padding: 0 18px;
-  border: 1.5px solid var(--line);
-  border-radius: 24px;
+  gap: 12px;
+  height: 56px;
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
   background: var(--surface);
+  box-shadow: var(--shadow);
   color: var(--muted);
 }
 #search:focus-within {
   border-color: var(--accent);
+  box-shadow:
+    var(--shadow),
+    0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--accent);
 }
 #search svg {
   flex: none;
@@ -82,17 +126,18 @@ main {
   background: none;
   color: var(--text);
   font: inherit;
-  font-size: 15px;
+  font-size: 16px;
 }
 #q::placeholder {
   color: var(--muted);
 }
 
+/* --- Sitios ---------------------------------------------------------------- */
 #sites {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  margin-top: 28px;
+  gap: 8px;
+  margin-top: 26px;
 }
 #sites[hidden] {
   display: none;
@@ -101,27 +146,29 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   min-width: 0;
-  padding: 12px 8px;
-  border-radius: 12px;
+  padding: 14px 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 14px;
   color: var(--text);
   text-decoration: none;
 }
 #sites a:hover {
+  border-color: var(--line);
   background: var(--surface);
 }
 #sites .icon {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--surface);
+  width: 46px;
+  height: 46px;
   border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface);
 }
 #sites a:hover .icon {
-  border-color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
 }
 #sites span {
   max-width: 100%;
@@ -131,66 +178,110 @@ main {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#sites a:hover span {
+  color: var(--text);
+}
 
+/* --- Barra inferior -------------------------------------------------------- */
 footer {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  padding: 16px 16px 22px;
+}
+.dock {
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 14px;
-  padding: 16px;
+  justify-content: center;
+  gap: 4px;
+  max-width: 100%;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 .modes {
   display: flex;
-  padding: 3px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
+  gap: 2px;
 }
-.modes button {
-  padding: 4px 13px;
+.modes button,
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 13px;
   border: 0;
-  border-radius: 999px;
+  border-radius: 10px;
   background: none;
   color: var(--muted);
   font: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }
-.modes button:hover {
+.modes button:hover,
+.chip:hover:enabled {
+  background: var(--surface-2);
   color: var(--text);
 }
 .modes button[aria-checked='true'] {
   background: var(--accent);
   color: var(--on-accent);
 }
-.link {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--muted);
-  font: inherit;
-  font-size: 12px;
-  cursor: pointer;
-}
-.link:hover:enabled {
+.chip[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
   color: var(--accent);
 }
-
-.hint {
-  flex-basis: 100%;
+.chip:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.chip svg {
+  flex: none;
+}
+.count {
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+  text-align: center;
+}
+.count[hidden] {
+  display: none;
+}
+.sep {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+  background: var(--line);
+}
+.note {
+  min-height: 18px;
   margin: 0;
   color: var(--muted);
   font-size: 12px;
   text-align: center;
-}
-.hint[hidden] {
-  display: none;
 }
 
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .sep {
+    display: none;
+  }
+  #sites {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

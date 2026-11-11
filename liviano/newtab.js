@@ -1,14 +1,21 @@
 // Nueva pestaña de Liviano: un buscador, tus sitios más usados y el modo. Nada más.
 // No hace ninguna petición de red: los íconos salen de la caché del navegador.
 
-const MODES = ['eco', 'pro', 'extremo'];
+const MODES = {
+  eco: 'Eco: ahorra batería y memoria.',
+  pro: 'Pro: rápido, sin romper nada.',
+  extremo: 'Extremo: lo mínimo indispensable. Puede romper algunos sitios.',
+};
 const modeButtons = [...document.querySelectorAll('.modes button')];
 const sleepBtn = document.getElementById('sleep');
+const note = document.getElementById('note');
+let relaunchHint = false;
 
 function showMode(mode) {
-  if (!MODES.includes(mode)) mode = 'pro';
+  if (!MODES[mode]) mode = 'pro';
   document.body.dataset.mode = mode;
   for (const b of modeButtons) b.setAttribute('aria-checked', String(b.dataset.mode === mode));
+  note.textContent = MODES[mode] + (relaunchHint ? ' Se completa al cerrar y reabrir Liviano.' : '');
   try {
     localStorage.setItem('mode', mode);
   } catch {
@@ -32,8 +39,9 @@ const hasLauncher = !navigator.userAgentData?.brands.some((b) => b.brand === 'Go
 for (const b of modeButtons) {
   b.addEventListener('click', () => {
     if (b.dataset.mode === document.body.dataset.mode) return;
+    relaunchHint = hasLauncher;
+    showMode(b.dataset.mode);
     chrome.storage.local.set({ mode: b.dataset.mode });
-    if (hasLauncher) document.getElementById('hint').hidden = false;
   });
 }
 
@@ -42,7 +50,7 @@ const textBtn = document.getElementById('toggleText');
 let noImages = false;
 function showText(value) {
   noImages = value;
-  textBtn.textContent = value ? 'Solo texto: sí' : 'Solo texto: no';
+  textBtn.setAttribute('aria-pressed', String(value));
 }
 showText(false);
 chrome.storage.local.get({ noImages: false }).then((s) => showText(s.noImages));
@@ -120,7 +128,7 @@ async function loadSites() {
 
 function showSites(visible) {
   sitesNav.hidden = !visible;
-  toggleBtn.textContent = visible ? 'Ocultar sitios' : 'Mostrar sitios';
+  toggleBtn.setAttribute('aria-pressed', String(visible));
   if (visible && !sitesLoaded) loadSites();
 }
 
@@ -135,8 +143,10 @@ toggleBtn.addEventListener('click', () => {
 // --- Pestañas suspendidas -------------------------------------------------
 async function showSleeping() {
   const n = (await chrome.tabs.query({ discarded: true })).length;
-  sleepBtn.textContent =
-    n === 0 ? 'Suspender las demás pestañas' : `${n} ${n === 1 ? 'suspendida' : 'suspendidas'} · Suspender las demás`;
+  const count = document.getElementById('sleepCount');
+  count.hidden = n === 0;
+  count.textContent = n;
+  count.title = n === 1 ? '1 pestaña suspendida' : `${n} pestañas suspendidas`;
 }
 sleepBtn.addEventListener('click', async () => {
   sleepBtn.disabled = true;
